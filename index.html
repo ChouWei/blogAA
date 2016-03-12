@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <!--<script src="../node_modules/jquery/dist/jquery.js"></script>-->
+    <!--<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>-->
+
+    <style>
+        .form-control,.la{
+            margin-top:10px;
+        }
+        .center{
+            text-align: center
+
+        }
+    </style>
+    <script>
+
+        function comment(){
+            var com =  $('#comment');
+            $.get('http://localhost:3000/comments',function(data){
+                com.html("");
+                console.log(data);
+                for(var i=0;i<data.length;i++){
+                    console.log(i);
+
+                    com.html(com.html()+"<h1 class=text-info>"+data[i].name+"</h1>"+"<p>"+data[i].comment+"</p> <hr>");
+//                <div id="comment">Test</div>
+
+                }
+
+
+            });
+        }
+        $(document).ready(function(){
+
+
+
+            comment();
+            $('#btn').click(function(){
+
+                $.post('http://localhost:3000/qq',{
+                   name: $('#name').val()
+                    , comment: $('#say').val()
+                });
+
+                comment();
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+
+
+
+
+<div class="container">
+
+    <input type="text" class="form-control" id="name" placeholder="your name">
+    <input type="text" class="form-control" id="say" placeholder="say something">
+    <button class="form-control btn-success" id="btn">Post</button>
+    <h1 class="center">Comments</h1>
+    <div class="la" id="comment">Test</div>
+    
+</div>
+
+</body>
+</html>
